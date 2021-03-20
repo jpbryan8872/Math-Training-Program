@@ -3,11 +3,11 @@ Creator: Jonathan Bryan
 Description: Math training program with different operators that scales with levels
 """
 
-import random
-
 
 def generate_question(operators, level, number_of_terms):
     """Generates question and prints with selected operator"""
+
+    import random
 
     # Define starting variables
     scaling_operators = [['+', '-'], 'x']
@@ -118,7 +118,6 @@ def main():
     current_number_of_terms = 2
     valid_modes = ['1', '2', '3', '4', '5']
 
-    # Create main running loop with quit value
     keep_running = True
     while keep_running:
         if current_level == 0:
@@ -136,7 +135,7 @@ Select a difficulty:
     5. Quit
 """)
 
-        # Keep asking for input until a valid mode is selected
+            # Keep asking for input until a valid mode is selected
         while selected_mode not in valid_modes:
             selected_mode = input("""
 Invalid selection. Please try again.
@@ -149,8 +148,8 @@ Select a difficulty:
     5. Quit
 """)
 
-        # Begins the question generation and calculation process
         # Passes different mathematical operators as arguments for questions
+        # Receives updated numbers as arguments to pass for iteration through levels and number of terms
         if selected_mode == '1':
             current_level, current_number_of_terms = generate_question(['+', '-'],
                                                                        current_level,
