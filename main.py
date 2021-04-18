@@ -1,13 +1,32 @@
 """
-Creator: Jonathan Bryan
-Description: Math training program with different operators that scales with levels
+Math training program with different operators that scales with levels.
+Course website:
+    https://sites.google.com/site/profvanselow/course/cop-1500?authuser=0.
+    Used for general guidelines along with specific help on try and except.
+    Also used for structure of main function and program inside while loop.
+W3Schools:
+    https://www.w3schools.com/python/
+    Used for help with lists.
+Python documentation:
+    https://docs.python.org/3/
+    Used a few times for general direction and checking how general Python
+    structures operate.
 """
+
+import random
+
+__author__ = "Jonathan Bryan"
 
 
 def generate_question(operators, level, number_of_terms):
-    """Generates question and prints with selected operator"""
-
-    import random
+    """
+    Generates question and prints with selected operator.
+    :param operators: List of possible operators in equation, list or string.
+    :param level: Current level the player is on, integer.
+    :param number_of_terms: Number of terms used in equation, integer.
+    :return: Updated level (0 is back to menu) and number of terms in equation,
+             both integers.
+    """
 
     # Define starting variables
     scaling_operators = [['+', '-'], 'x']
@@ -39,7 +58,8 @@ def generate_question(operators, level, number_of_terms):
         # Get a random number for the term
         random_number = random.randint(1, level)
 
-        # Print the question (using addition with strings to create the complete problem)
+        # Print the question (using addition with strings to create the
+        # complete problem)
         problem += str(random_number)
         if not last_number:
             problem += " " + used_operator + " "
@@ -48,7 +68,9 @@ def generate_question(operators, level, number_of_terms):
         if term_number == 0:
             tally = random_number
         elif last_number:
-            final_answer = calculate_answer(last_operator, random_number, tally)
+            final_answer = calculate_answer(last_operator,
+                                            random_number,
+                                            tally)
         else:
             tally = calculate_answer(last_operator, random_number, tally)
     print(problem + ": ", end='')
@@ -57,7 +79,7 @@ def generate_question(operators, level, number_of_terms):
     correct = check_answer(final_answer)
     if correct == "menu":
         return 0, 2
-    elif correct:   # If the answer is correct
+    elif correct:  # If the answer is correct
         # Multiplying "Correct!" times level to show correct streak
         print("Correct! " * level)
         level += 1
@@ -69,8 +91,15 @@ def generate_question(operators, level, number_of_terms):
 
 
 def calculate_answer(operator, term, tally):
-    """Calculates the answer as the question is generated"""
-    # Uses + - * / // % **
+    """
+    Calculates the answer as the question is generated.
+    :param operator: Operator to be used in calculation, string.
+    :param term: Random number generated for problem, integer.
+    :param tally: Current tally kept from last problem, integer.
+    :return: New tally for equation based on operator, integer.
+    """
+
+    # Uses + - * / // % ** to return a running tally of the answer
     if operator == '+':
         return tally + term
     elif operator == '-':
@@ -88,7 +117,11 @@ def calculate_answer(operator, term, tally):
 
 
 def check_answer(final_answer):
-    """Checks the input answer against the calculated answer"""
+    """
+    Checks the input answer against the calculated answer.
+    :param final_answer:
+    :return: Whether the input answer matches the calculated answer, boolean.
+    """
 
     input_answer = input()
 
@@ -98,12 +131,15 @@ def check_answer(final_answer):
         # Check for return to menu
         if input_answer == "menu":
             return input_answer
+        # Tests input for type
         try:
             input_answer = float(input_answer)
             check_input = True
         except ValueError:
             print("Please input a number. Try again:", end=' ')
             input_answer = input()
+    # Checks if answer is correct (rounds for when operator is division)
+    # Returns true or false
     if input_answer != round(final_answer, 2):
         return False
     else:
@@ -111,7 +147,10 @@ def check_answer(final_answer):
 
 
 def main():
-    """Main function that displays the menu"""
+    """
+    Main loop which gives a menu and asks for equation type.
+    """
+
     # Declaring starting variables and values
     current_level = 0
     selected_mode = 0
@@ -149,29 +188,23 @@ Select a difficulty:
 """)
 
         # Passes different mathematical operators as arguments for questions
-        # Receives updated numbers as arguments to pass for iteration through levels and number of terms
+        # Receives updated numbers as arguments to pass for iteration through
+        # levels and number of terms
         if selected_mode == '1':
-            current_level, current_number_of_terms = generate_question(['+', '-'],
-                                                                       current_level,
-                                                                       current_number_of_terms
-                                                                       )
+            current_level, current_number_of_terms = generate_question(
+                ['+', '-'], current_level, current_number_of_terms)
         elif selected_mode == '2':
-            current_level, current_number_of_terms = generate_question('x',
-                                                                       current_level,
-                                                                       current_number_of_terms
-                                                                       )
+            current_level, current_number_of_terms = generate_question(
+                'x', current_level, current_number_of_terms)
         elif selected_mode == '3':
-            current_level, current_number_of_terms = generate_question(['/', '//', '%'],
-                                                                       current_level,
-                                                                       current_number_of_terms
-                                                                       )
+            current_level, current_number_of_terms = generate_question(
+                ['/', '//', '%'], current_level, current_number_of_terms)
         elif selected_mode == '4':
-            current_level, current_number_of_terms = generate_question('^',
-                                                                       current_level,
-                                                                       current_number_of_terms
-                                                                       )
+            current_level, current_number_of_terms = generate_question(
+                '^', current_level, current_number_of_terms)
         else:
             keep_running = False
 
 
-main()
+if __name__ == "__main__":
+    main()
